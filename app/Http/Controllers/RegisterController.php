@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use App\User;
+use App\Http\Resources\UserResource;
+use App\Entity\User;
 
 class RegisterController extends Controller
 {
@@ -15,5 +16,6 @@ class RegisterController extends Controller
         $user->password = bcrypt($request->get('password'));
 
         $user->save();
+        return new UserResource($user);
     }
 }
