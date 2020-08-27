@@ -10,12 +10,11 @@ class RegisterController extends Controller
 {
     public function register(StoreUserRequest $request)
     {
-        $user = new User;
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-        $user->password = bcrypt($request->get('password'));
-
-        $user->save();
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+        ]);
         return new UserResource($user);
     }
 }
