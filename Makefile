@@ -23,3 +23,5 @@ perm:
 	sudo chown ${USER}:${USER} storage -R
 storage:
 	sudo chmod 777 storage -R
+passport-token:
+	php artisan passport:install

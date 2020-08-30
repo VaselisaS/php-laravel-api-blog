@@ -12,6 +12,10 @@ services:
     depends_on:
       - php-fpm
     container_name: "nginx"
+    networks:
+      laravel-api-block:
+        aliases:
+          - api.local
   php-fpm:
     build:
       context: ./
@@ -24,6 +28,8 @@ services:
       - "DB_HOST=postgres"
       - "DB_PORT=5432"
     container_name: "php-fpm"
+    networks:
+      - laravel-api-block
   php-cli:
     build:
       context: ./
@@ -37,6 +43,8 @@ services:
       - "DB_HOST=postgres"
       - "DB_PORT=5432"
     container_name: "php-cli"
+    networks:
+      - laravel-api-block
   postgres:
     image: postgres
     container_name: "postgres"
@@ -49,6 +57,8 @@ services:
     volumes:
       - "./storage/docker/pg-init-scripts:/docker-entrypoint-initdb.d"
       - "./storage/docker/postgresql:/var/lib/postgresql/data"
+    networks:
+      - laravel-api-block
   node:
     build:
       context: ./
@@ -57,4 +67,8 @@ services:
       - ./:/var/www
     tty: true
     container_name: "node"
-
+    networks:
+      - laravel-api-block
+networks:
+  laravel-api-block:
+    driver: bridge

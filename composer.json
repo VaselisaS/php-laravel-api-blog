@@ -15,7 +15,8 @@
         "laravel/framework": "^7.24",
         "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.1"
+        "laravel/ui": "^2.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

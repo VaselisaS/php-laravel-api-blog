@@ -60,6 +60,8 @@ return [
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
+    'invalid_value' => 'Invalid Request. Please enter a username or a password.',
+    'invalid_credentials' => 'Your credentials are incorrect. Please try again.',
     'ip' => 'The :attribute must be a valid IP address.',
     'ipv4' => 'The :attribute must be a valid IPv4 address.',
     'ipv6' => 'The :attribute must be a valid IPv6 address.',
