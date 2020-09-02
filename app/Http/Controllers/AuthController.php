@@ -29,4 +29,9 @@ class AuthController extends Controller
     {
         return $this->userRepo->loginUser($request->all());
     }
+
+    public function logout(int $id)
+    {
+        //
+    }
 }

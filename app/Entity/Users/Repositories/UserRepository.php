@@ -29,12 +29,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function updateUser(array $params): bool
     {
-        // TODO: Implement updateUser() method.
+        return $this->model->update($params);
     }
 
     public function findUserById(int $id): User
     {
-        // TODO: Implement findUserById() method.
+        return $this->model->findOrFail($id);
     }
 
     public function deleteUser(): bool
@@ -76,5 +76,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $exception = new LoginUserBadResponseException($e->getCode());
             return $exception->getResponse();
         }
+    }
+
+    public function logoutUser(array $params)
+    {
+        // TODO: Implement logoutUser() method.
     }
 }

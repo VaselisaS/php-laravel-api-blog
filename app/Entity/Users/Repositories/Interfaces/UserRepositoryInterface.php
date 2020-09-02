@@ -16,6 +16,8 @@ interface UserRepositoryInterface
 
     public function loginUser(array $params);
 
+    public function logoutUser(array $params);
+
     public function updateUser(array $params) : bool;
 
     public function findUserById(int $id) : User;
