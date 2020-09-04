@@ -78,8 +78,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
     }
 
-    public function logoutUser(array $params)
+    public function logoutUser(User $user)
     {
-        // TODO: Implement logoutUser() method.
+        $user->tokens->each(function ($token, /** @noinspection PhpUnusedParameterInspection */ $key) {
+            $token->delete();
+        });
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
+use \Auth;
 
 class AuthController extends Controller
 {
@@ -30,8 +31,10 @@ class AuthController extends Controller
         return $this->userRepo->loginUser($request->all());
     }
 
-    public function logout(int $id)
+    public function logout()
     {
-        //
+        $user = Auth::user();
+        $this->userRepo->logoutUser($user);
+        return response()->json(__('auth.logout'));
     }
 }
