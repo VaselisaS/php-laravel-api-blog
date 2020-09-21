@@ -53,6 +53,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'name' => $params['name'],
             'email' => $params['email'],
             'password' => bcrypt($params['password']),
+            'role' => $this->model::ROLE_USER
         ]);
     }
 
@@ -71,7 +72,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                     "password" => $params['password'],
                 ]
             ]);
-            return json_decode((string) $response->getBody(), true);
+            return json_decode((string)$response->getBody(), true);
         } catch (BadResponseException $e) {
             $exception = new LoginUserBadResponseException($e->getCode());
             return $exception->getResponse();
@@ -83,5 +84,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->tokens->each(function ($token, /** @noinspection PhpUnusedParameterInspection */ $key) {
             $token->delete();
         });
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->model->role === $this->model::ROLE_ADMIN;
+    }
+
+
+    public function changeRole(string $role)
+    {
+        if (!array_key_exists($role, $this->model::rolesList())) {
+            throw new \InvalidArgumentException('Undefined role "' . $role . '"');
+        }
+        if ($this->model->role === $role) {
+            throw new \DomainException('Role is already assigned.');
+        }
+        $this->model->update(['role' => $role]);
     }
 }

@@ -17,7 +17,7 @@ rm-db:
 	sudo rm -rf ./storage/docker/postgresql
 
 test:
-	docker-compose exec php-cli ./vendor/bin/phpunit
+	docker-compose exec php-cli php artisan test
 perm:
 	sudo chown ${USER}:${USER} bootstrap/cache -R
 	sudo chown ${USER}:${USER} storage -R

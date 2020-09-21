@@ -25,4 +25,8 @@ interface UserRepositoryInterface
     public function deleteUser() : bool;
 
     public function searchUser(string $text) : Collection;
+
+    public function isAdmin() : bool;
+
+    public function changeRole(string $role);
 }

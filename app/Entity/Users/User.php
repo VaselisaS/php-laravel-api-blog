@@ -2,7 +2,7 @@
 
 namespace App\Entity\Users;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -14,6 +14,7 @@ use Laravel\Passport\HasApiTokens;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property string $role
  * @property string $verify_token
  * @method static create(array $array)
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -39,18 +40,20 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasFactory, HasApiTokens;
 
+    public const ROLE_USER = 'user';
+    public const ROLE_MODERATOR = 'moderator';
+    public const ROLE_ADMIN = 'admin';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
@@ -70,4 +73,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function rolesList(): array
+    {
+        return [
+            self::ROLE_USER => 'User',
+            self::ROLE_MODERATOR => 'Moderator',
+            self::ROLE_ADMIN => 'Admin',
+        ];
+    }
 }
