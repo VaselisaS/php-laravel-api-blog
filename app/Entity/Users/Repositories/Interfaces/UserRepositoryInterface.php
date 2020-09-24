@@ -28,5 +28,7 @@ interface UserRepositoryInterface
 
     public function isAdmin() : bool;
 
+    public function isModerator() : bool;
+
     public function changeRole(string $role);
 }

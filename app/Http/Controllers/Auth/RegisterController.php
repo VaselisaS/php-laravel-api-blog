@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entity\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Entity\Users\User;
@@ -11,18 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
 
     /**
      * Where to redirect users after registration.
@@ -34,10 +29,11 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->middleware('guest');
     }
 
@@ -64,10 +60,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return $this->userRepository->createUser($data);
     }
 }

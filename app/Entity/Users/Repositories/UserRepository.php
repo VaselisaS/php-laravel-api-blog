@@ -102,4 +102,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
         $this->model->update(['role' => $role]);
     }
+
+    public function isModerator(): bool
+    {
+        return $this->model->role === $this->model::ROLE_MODERATOR;
+    }
 }

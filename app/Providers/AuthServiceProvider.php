@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Entity\Users\Repositories\UserRepository;
+use App\Entity\Users\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -26,6 +28,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
-        //
+        Gate::define('admin-panel', function (User $user) {
+            $userRepository = new UserRepository($user);
+            return $userRepository->isAdmin();
+        });
     }
 }
